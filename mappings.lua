@@ -28,6 +28,15 @@ return {
     -- trouble
 
     ["<leader>xx"] = { "<cmd>TroubleToggle<CR>", desc = "Toggle Trouble" },
+
+    ["<leader>db"] = {
+      "<cmd> DapToggleBreakpoint <CR>",
+      desc = "Add breakpoint at line"
+    },
+    ["<leader>dr"] = {
+      "<cmd> DapContinue <CR>",
+      desc = "Run or continue the debugger"
+    }
   },
   t = {
     -- setting a mapping to false will disable it
