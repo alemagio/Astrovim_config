@@ -24,13 +24,6 @@ return {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
   },
-  "folke/trouble.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  },
   {
     'rcarriga/neotest',
     dependencies = {
@@ -72,28 +65,6 @@ return {
         desc =
         "Summary"
       },
-    },
-    config = function()
-      require('neotest').setup({
-        adapters = {
-          require('neotest-vitest')
-        }
-      })
-    end
-  },
-  {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-  },
-  {
-    "princejoogie/dir-telescope.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
     },
   },
 }
