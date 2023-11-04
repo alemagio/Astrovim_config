@@ -37,7 +37,7 @@ return {
           -- "go",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
+          "markdown",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -52,7 +52,19 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+      "grammarly",
     },
+    config = {
+      grammarly = function()
+        return {
+          cmd = { "/Users/alessandro/grammarly/extension/node_modules/.bin/grammarly-languageserver", "--stdio" },
+          filetypes = { "markdown", "text" },
+          init_options = {
+            clientId = 'client_BaDkMgx4X19X9UxxYRCXZo',
+          },
+        }
+      end,
+    }
   },
 
   -- Configure require("lazy").setup() options
