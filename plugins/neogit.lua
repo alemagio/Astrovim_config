@@ -6,5 +6,6 @@ return {
     "sindrets/diffview.nvim",        -- optional
     "ibhagwan/fzf-lua",              -- optional
   },
-  config = true
+  config = true,
+  lazy = false,
 }
