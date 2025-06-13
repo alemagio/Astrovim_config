@@ -14,7 +14,7 @@ return {
   { -- further customize the options set by the community
     "catppuccin",
     opts = {
-      flavour = "mocha",
+      flavour = "macchiato",
       integrations = {
         rainbow_delimiters = true,
       },
