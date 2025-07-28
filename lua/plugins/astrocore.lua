@@ -105,49 +105,31 @@ return {
         },
         -- Harpoon
         ["<leader>h"] = { name = "Harpoon" }, -- Register menu group
-
         ["<leader>hm"] = {
-
           function()
             local harpoon = require "harpoon"
             harpoon.ui:toggle_quick_menu(harpoon:list())
           end,
-
           desc = "Harpoon Menu",
         },
-
         ["<leader>ha"] = {
-
           function() require("harpoon"):list():add() end,
-
           desc = "Add File to Harpoon",
         },
-
         ["<leader>1"] = {
-
           function() require("harpoon"):list():select(1) end,
-
           desc = "Go to Harpoon 1",
         },
-
         ["<leader>2"] = {
-
           function() require("harpoon"):list():select(2) end,
-
           desc = "Go to Harpoon 2",
         },
-
         ["<leader>3"] = {
-
           function() require("harpoon"):list():select(3) end,
-
           desc = "Go to Harpoon 3",
         },
-
         ["<leader>4"] = {
-
           function() require("harpoon"):list():select(4) end,
-
           desc = "Go to Harpoon 4",
         },
         -- END Harpoon
