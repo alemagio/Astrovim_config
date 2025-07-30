@@ -1,15 +1,30 @@
+local prefix = "<Leader>a"
 return {
   "yetone/avante.nvim",
-  -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  -- ⚠️ must add this setting! ! !
-  build = vim.fn.has "win32" and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
-  event = "VeryLazy",
-  version = false, -- Never set this value to "*"! Never!
-  ---@module 'avante'
-  ---@type avante.Config
+  build = vim.fn.has "win32" == 1 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+    or "make",
+  event = "User AstroFile", -- load on file open because Avante manages it's own bindings
+  cmd = {
+    "AvanteAsk",
+    "AvanteBuild",
+    "AvanteEdit",
+    "AvanteRefresh",
+    "AvanteSwitchProvider",
+    "AvanteShowRepoMap",
+    "AvanteModels",
+    "AvanteChat",
+    "AvanteToggle",
+    "AvanteClear",
+    "AvanteFocus",
+    "AvanteStop",
+  },
+  dependencies = {
+    { "stevearc/dressing.nvim", optional = true },
+    "nvim-lua/plenary.nvim",
+    "MunifTanjim/nui.nvim",
+    { "AstroNvim/astrocore", opts = function(_, opts) opts.mappings.n[prefix] = { desc = " Avante" } end },
+  },
   opts = {
-    -- add any opts here
-    -- for example
     provider = "openrouter",
     providers = {
       ["openrouter"] = {
@@ -33,43 +48,100 @@ return {
       --   },
       -- },
     },
+    mappings = {
+      ask = prefix .. "a",
+      edit = prefix .. "e",
+      refresh = prefix .. "r",
+      new_ask = prefix .. "n",
+      focus = prefix .. "f",
+      select_model = prefix .. "?",
+      stop = prefix .. "S",
+      select_history = prefix .. "h",
+      toggle = {
+        default = prefix .. "t",
+        debug = prefix .. "d",
+        hint = prefix .. "H",
+        suggestion = prefix .. "s",
+        repomap = prefix .. "R",
+      },
+      diff = {
+        next = "]c",
+        prev = "[c",
+      },
+      files = {
+        add_current = prefix .. ".",
+        add_all_buffers = prefix .. "B",
+      },
+    },
   },
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "MunifTanjim/nui.nvim",
-    --- The below dependencies are optional,
-    "echasnovski/mini.pick", -- for file_selector provider mini.pick
-    "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-    "ibhagwan/fzf-lua", -- for file_selector provider fzf
-    "stevearc/dressing.nvim", -- for input provider dressing
-    "folke/snacks.nvim", -- for input provider snacks
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "zbirenbaum/copilot.lua", -- for providers='copilot'
+  specs = { -- configure optional plugins
+    { "AstroNvim/astroui", opts = { icons = { Avante = "" } } },
     {
-      -- support for image pasting
-      "HakonHarnes/img-clip.nvim",
-      event = "VeryLazy",
-      opts = {
-        -- recommended settings
-        default = {
-          embed_image_as_base64 = false,
-          prompt_for_file_name = false,
-          drag_and_drop = {
-            insert_mode = true,
+      -- make sure `Avante` is added as a filetype
+      "MeanderingProgrammer/render-markdown.nvim",
+      optional = true,
+      opts = function(_, opts)
+        if not opts.file_types then opts.file_types = { "markdown" } end
+        opts.file_types = require("astrocore").list_insert_unique(opts.file_types, { "Avante" })
+      end,
+    },
+    {
+      -- make sure `Avante` is added as a filetype
+      "OXY2DEV/markview.nvim",
+      optional = true,
+      opts = function(_, opts)
+        if not opts.preview then opts.preview = {} end
+        if not opts.preview.filetypes then opts.preview.filetypes = { "markdown", "quarto", "rmd" } end
+        opts.preview.filetypes = require("astrocore").list_insert_unique(opts.preview.filetypes, { "Avante" })
+      end,
+    },
+    {
+      "folke/snacks.nvim",
+      optional = true,
+      specs = {
+        {
+          "yetone/avante.nvim",
+          opts = {
+            selector = {
+              provider = "snacks",
+            },
           },
-          -- required for Windows users
-          use_absolute_path = true,
         },
       },
     },
     {
-      -- Make sure to set this up properly if you have lazy=true
-      "MeanderingProgrammer/render-markdown.nvim",
+      "nvim-neo-tree/neo-tree.nvim",
+      optional = true,
       opts = {
-        file_types = { "markdown", "Avante" },
+        filesystem = {
+          commands = {
+            avante_add_files = function(state)
+              local node = state.tree:get_node()
+              local filepath = node:get_id()
+              local relative_path = require("avante.utils").relative_path(filepath)
+
+              local sidebar = require("avante").get()
+
+              local open = sidebar:is_open()
+              -- ensure avante sidebar is open
+              if not open then
+                require("avante.api").ask()
+                sidebar = require("avante").get()
+              end
+
+              sidebar.file_selector:add_selected_file(relative_path)
+
+              -- remove neo tree buffer
+              if not open then sidebar.file_selector:remove_selected_file "neo-tree filesystem [1]" end
+            end,
+          },
+          window = {
+            mappings = {
+              ["oa"] = "avante_add_files",
+            },
+          },
+        },
       },
-      ft = { "markdown", "Avante" },
     },
   },
 }
