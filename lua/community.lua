@@ -9,7 +9,6 @@ return {
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.tailwindcss" },
-  -- { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { -- further customize the options set by the community
     "catppuccin",

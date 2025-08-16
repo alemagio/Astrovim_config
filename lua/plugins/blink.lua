@@ -14,8 +14,9 @@ return {
     },
     sources = {
       -- Add 'avante' to the list
-      default = { "avante", "lsp", "path", "buffer" },
+      default = { "lsp", "path", "buffer", "avante" },
       providers = {
+        -- codeium = { name = "Codeium", module = "codeium.blink", async = true },
         avante = {
           module = "blink-cmp-avante",
           name = "Avante",
