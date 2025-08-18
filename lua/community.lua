@@ -23,4 +23,11 @@ return {
   { import = "astrocommunity.utility.lua-json5" },
   { import = "astrocommunity.diagnostics.trouble-nvim", opts = { position = "right", width = 100 } },
   { import = "astrocommunity.recipes.ai" },
+  { import = "astrocommunity.file-explorer.oil-nvim" },
+  { "stevearc/oil.nvim", opts = {
+    keymaps = {
+      ["<C-h>"] = false,
+      ["<C-l>"] = false,
+    },
+  } },
 }

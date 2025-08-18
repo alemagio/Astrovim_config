@@ -133,6 +133,7 @@ return {
           desc = "Go to Harpoon 4",
         },
         -- END Harpoon
+        ["-"] = { function() require("oil").open() end, desc = "Open folder in Oil" },
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
         -- ["<Leader>b"] = { desc = "Buffers" },
