@@ -24,10 +24,15 @@ return {
   { import = "astrocommunity.diagnostics.trouble-nvim", opts = { position = "right", width = 100 } },
   { import = "astrocommunity.recipes.ai" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
-  { "stevearc/oil.nvim", opts = {
-    keymaps = {
-      ["<C-h>"] = false,
-      ["<C-l>"] = false,
+  {
+    "stevearc/oil.nvim",
+    opts = {
+      keymaps = {
+        ["<C-h>"] = false,
+        ["<C-l>"] = false,
+      },
     },
-  } },
+    { import = "astrocommunity.pack.quarto" },
+    { import = "astrocommunity.pack.markdown" },
+  },
 }
