@@ -27,6 +27,7 @@ return {
       -- see `:h vim.filetype.add` for usage
       extension = {
         foo = "fooscript",
+        -- qmd = "markdown",
       },
       filename = {
         [".foorc"] = "fooscript",
