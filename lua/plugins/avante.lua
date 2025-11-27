@@ -30,7 +30,7 @@ return {
       ["openrouter"] = {
         __inherited_from = "openai",
         endpoint = "https://openrouter.ai/api/v1",
-        model = "anthropic/claude-sonnet-4.5",
+        model = "minimax/minimax-m2",
         api_key_name = "AVANTE_OPEN_ROUTER_API_KEY",
         timeout = 30000, -- Timeout in milliseconds
         extra_request_body = {
